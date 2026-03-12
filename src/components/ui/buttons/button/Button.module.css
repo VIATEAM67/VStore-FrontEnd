@@ -1,0 +1,40 @@
+.button {
+   border-radius: 4px;
+   padding: 8px 12px;
+   font-size: 16px;
+   font-weight: 500;
+   border: none;
+   transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.button:hover {
+   cursor: pointer;
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.button:active {
+   transform: scale(0.95);
+}
+
+/* button types */
+.primary {    
+   background-color: var(--color-green);
+   color: var(--color-black);
+}
+.authSignIN {
+   background-color: var(--color-green);
+   padding: 32px 0;
+   width: 488px;
+   font-size: 18px;
+   font-weight: 900;
+}
+.signIN {
+   background-color: var(--color-black);
+   width: 72px;
+   color: var(--color-white);
+   font-size: 16px;
+   font-weight: medium;
+   padding: 10px 0;
+   border-radius: 4px;
+   margin: 0 18px;
+   border: none;
+   transition: transform 0.3s ease, box-shadow 0.3s ease;
+}

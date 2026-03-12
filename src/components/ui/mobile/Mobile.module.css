@@ -1,0 +1,31 @@
+.container {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+}
+.image {
+   flex: 1;
+}
+.description {
+   flex: 1;
+   padding-left: 58px;
+}
+.description h3 {
+   color: var(--color-white);
+   font-size: 24px;
+   font-weight: bold;
+   margin-bottom: 12px;
+}
+.description p {
+   width: 368px;
+   color: var(--color-white);
+   opacity: 70%;
+   font-size: 16px;
+   font-weight: 400;
+   margin-bottom: 30px;
+   display: -webkit-box; 
+   -webkit-line-clamp: 3; 
+   -webkit-box-orient: vertical; 
+   overflow: hidden; 
+   text-overflow: ellipsis; 
+}
