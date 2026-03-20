@@ -1,19 +1,25 @@
-import styles from './Header.module.css'
-import '../../../styles/variables.css'
+import styles from './Header.module.css';
+import '../../../styles/variables.css';
 
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
 
-import userIcon from '../../../assets/icons/header-icons/user.svg'
-import favoriteIcon from '../../../assets/icons/header-icons/favorite.svg'
-import basketIcon from '../../../assets/icons/header-icons/basket.svg'
-import globeIcon from '../../../assets/icons/header-icons/globe.svg'
+import { AuthContext } from '../../../context/AuthContext';
 
-import { Logo } from './Logo.jsx'
+import userIcon from '../../../assets/icons/header-icons/user.svg';
+import favoriteIcon from '../../../assets/icons/header-icons/favorite.svg';
+import basketIcon from '../../../assets/icons/header-icons/basket.svg';
+import globeIcon from '../../../assets/icons/header-icons/globe.svg';
+
+import { Logo } from './Logo.jsx';
 import { HeaderNavigation } from './HeaderNavigation.jsx';
-import { Search } from './Search.jsx'
-import { HeaderActions } from './HeaderActions.jsx'
+import { Search } from './Search.jsx';
+import { HeaderActions } from './HeaderActions.jsx';
 
 const Header = () => {
+  const navigate = useNavigate();
+  const { token, user, logout } = useContext(AuthContext);
+
   const links = [
     { text: 'Discover', path: '/' },
     { text: 'Support', path: '/support' },
@@ -21,27 +27,45 @@ const Header = () => {
   ];
 
   const actionIcons = [
-    { alt: 'user-icon', src: userIcon, to: '/'},
-    { alt: 'favorite-icon', src: favoriteIcon, to: '/'},
-    { alt: 'basket-icon', src: basketIcon, to: '/'},
-    { alt: 'globe-icon', src: globeIcon, to: '/'},
+    { alt: 'user-icon', src: userIcon, to: token ? '/profile' : '/auth' },
+    { alt: 'favorite-icon', src: favoriteIcon, to: '/wishlist' },
+    { alt: 'basket-icon', src: basketIcon, to: '/cart' },
+    { alt: 'globe-icon', src: globeIcon, to: '/' },
   ];
 
-  const navigate = useNavigate();
+  const handleUserClick = () => {
+    if (token) {
+      navigate('/profile');
+    } else {
+      navigate('/auth');
+    }
+  };
 
-  const authClick = () => {
+  const handleSignIn = () => {
     navigate('/auth');
-  }
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
 
   return (
     <header className={styles.header}>
       <div className={styles.container}>
         <div className={styles.logoNavInputWrapper}>
           <Logo />
-          <HeaderNavigation links={links}/>
+          <HeaderNavigation links={links} />
           <Search />
         </div>
-        <HeaderActions actionIcons={actionIcons} authClick={authClick}/>
+
+        <HeaderActions
+          actionIcons={actionIcons}
+          onUserClick={handleUserClick}
+          onSignIn={handleSignIn}
+          onLogout={handleLogout}
+          isAuth={!!token}
+        />
       </div>
     </header>
   );

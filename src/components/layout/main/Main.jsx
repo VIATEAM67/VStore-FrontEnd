@@ -10,34 +10,29 @@ const Main = () => {
    const propsData = [
       {
          title: 'Discover Something',
-         data: '/data/discover-cards.json'
       },
       {
          title: 'Winter Sale Spotlight',
-         data: '/data/sales-cards.json'
       },
       {
          data:'/data/featured-cards.json'
       },
       {
          title: 'Popular Games',
-         data:'/data/popular-games.json'
       },
       {
          title: 'Recently Updated',
-         data:'/data/updated-games.json'
       },
       {
          title: 'Now On The  Store',
-         data:'/data/discover-cards.json'
       }
    ]
-    
+ 
    return (
       <main className={styles.container}>
          <TopGame />
-         <Advertising {...propsData[0]}/>
-         <Advertising {...propsData[1]}/>
+         <Advertising {...propsData[0]} type="fullPrice"/>
+         <Advertising {...propsData[1]} type="sale"/>
          <Featured {...propsData[2]}/>
          <FreeGames />
          <Mobile/>

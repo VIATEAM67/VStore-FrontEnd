@@ -1,28 +1,41 @@
 import { useEffect, useState } from 'react'
 import styles from './Adverising.module.css'
 import Card from "../cards/card/Card"
+import Button from '../buttons/button/Button.jsx'
 
-const Advertising = ({title, data}) => {
-   const [cards, setCards] = useState([]);
+import { useGames } from '../../../hooks/useGames'
+import { useSaleGames } from '../../../hooks/useSaleGames'
+import { useFullPriceGames } from '../../../hooks/useFullPriceGames'
 
-   // загрузка JSON
-   useEffect(() => {
-      fetch(data)
-         .then((res) => res.json())
-         .then((data) => setCards(data))
-         .catch((err) => console.error("Ошибка загрузки JSON:", err));
-   }, [data]);
+const Advertising = ({title, type}) => {
+   const [showAll, setShowAll] = useState(false);
+   const { games } = useGames();
+   const { games: saleGames } = useSaleGames();
+   const { games: fullPriceGame } = useFullPriceGames();
+
+   const data = type === 'sale' ? saleGames : type === 'fullPrice' ? fullPriceGame : games;
+
+   // если showAll = false → только 8 карточек
+   const visibleCards = showAll ? data : data.slice(0, 8);
 
    return (
       <div className={styles.container}>
          <h2 className={styles.title}>{title}</h2>
          <ul>
-            {cards.map((card, index) => (
-               <li key={index}>
-                  <Card {...card}/>
+            {visibleCards.map((card) => (
+               <li key={card.id}>
+                  <Card {...card} />
                </li>
             ))}
          </ul>
+
+         {data.length > 8 && (
+            <Button
+               title={showAll ? 'Hide all games' : 'All games'}
+               variant="positioned" size='small'
+               onClick={() => setShowAll(prev => !prev)}
+            />
+         )}
       </div>
    )
 }

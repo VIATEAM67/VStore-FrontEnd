@@ -4,7 +4,6 @@
    align-items: center;
    border-radius: 4px;
    margin-top: auto;
-   align-self: flex-start;
    border: none;
    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -23,4 +22,4 @@
 }
 
 .primary { background-color: var(--color-green); color: var(--color-black); }
-.secondary { background-color: #393E46; color: var(--color-white); }
+.secondary { background-color: #393E46; color: var(--color-white); align-self: flex-start;}

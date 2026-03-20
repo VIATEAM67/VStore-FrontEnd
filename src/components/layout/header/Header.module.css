@@ -1,10 +1,13 @@
 .header {
   background: var(--bg-header);
   width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 .container {
   box-sizing: border-box;
-  max-width: 1440px;
+  max-width: 1640px;
   height: 64px;
   margin: 0 auto;
   padding: 18px;

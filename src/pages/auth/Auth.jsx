@@ -1,68 +1,148 @@
 import styles from './Auth.module.css'
-import Button from '../../components/ui/buttons/button/Button.jsx'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { AuthInput } from './AuthInput.jsx'
 import { AuthCheckbox } from './AuthCheckbox.jsx'
+import Button from '../../components/ui/buttons/button/Button.jsx'
 
-import { isValidEmail, isValidPassword, passwordsMatch } from '../../utils/validation';
+import { isValidEmail, isValidPassword, passwordsMatch } from '../../utils/validation'
+import { registerUser, loginUser } from '../../api/AuthAPI.js'
+import { useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
 
 const Auth = () => {
-   const [email, setEmail] = useState('');
-   const [password, setPassword] = useState('');
-   const [repeatPassword, setRepeatPassword] = useState('');
-   const [agree, setAgree] = useState(false);
-   const [touched, setTouched] = useState({email: false, password: false, repeatPassword: false});
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [repeatPassword, setRepeatPassword] = useState('');
+  const [agree, setAgree] = useState(false);
 
-   const [isRegistered, setIsRegistered] = useState(false);
+  const [isLoginMode, setIsLoginMode] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-   // перевірки
-   const emailValid = isValidEmail(email);
-   const passwordValid = isValidPassword(password);
-   const passwordsEqual = passwordsMatch(password, repeatPassword);
-   const formValid = emailValid && passwordValid && passwordsEqual && agree;
-   
-   return (
-      <div className={styles.container}>
-         <div className={styles.wrapper}>
-            <h2 className={styles.title}>Create an account</h2>
+  const navigate = useNavigate();
 
-            <div className={styles.authBox}>
+  // Если уже есть токен — сразу в профиль
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token && window.location.pathname === '/auth') {
+      navigate('/profile');
+    }
+  }, []);
 
-               <AuthInput
-                  label='PUT YOUR EMAIL HERE'
-                  type='email'
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  onBlur={() => setTouched(prev => ({ ...prev, email: true }))}
-                  error={touched.email && !emailValid ? 'Enter a valid email' : null}
-               />
+  const emailValid = isValidEmail(email)
+  const passwordValid = isValidPassword(password)
+  const passwordsEqual = passwordsMatch(password, repeatPassword)
 
-               <AuthInput
-                  label='CREATE A PASSWORD'
-                  type='password'
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  onBlur={() => setTouched(prev => ({ ...prev, password: true }))}
-                  error={touched.password && !passwordValid ? 'Password must be at least 6 characters' : null}
-               />
+  const formValid =
+    emailValid &&
+    passwordValid &&
+    (isLoginMode || passwordsEqual) &&
+    (isLoginMode || agree);
 
-               <AuthInput
-                  label='REPEATE A PASSWORD'
-                  type='password'
-                  value={repeatPassword}
-                  onChange={(e) => setRepeatPassword(e.target.value)}
-                  onBlur={() => setTouched(prev => ({ ...prev, repeatPassword: true }))}
-                  error={touched.repeatPassword && !passwordsEqual ? 'Passwords do not match' : null}
-               />
+  const { login } = useContext(AuthContext);
 
-               <AuthCheckbox checked={agree} onChange={(e) => setAgree(e.target.checked)}/>
+  // LOGIN
+  const handleLogin = async () => {
+    setLoading(true);
+    setError('');
 
-               <Button title={'Sign in'} variant='authSignIN' disabled={!formValid}/>
-            </div>
-         </div>
+    try {
+      const response = await loginUser(email, password);
+      const { token, user } = response.data;
+      login(token, user);
+      navigate('/');
+    } catch (err) {
+      setError('Invalid email or password');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  // REGISTER
+  const handleRegister = async () => {
+    if (!formValid) return;
+
+    setLoading(true);
+    setError('');
+
+    try {
+      await registerUser(email, password);
+
+      const loginResponse = await loginUser(email, password);
+      const { token, user } = loginResponse.data;
+      // localStorage.setItem('token', loginResponse.data.token);
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
+
+      navigate('/profile');
+    } catch (err) {
+      setError('Registration error. Try again.');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <div className={styles.container}>
+      <div className={styles.wrapper}>
+        <h2 className={styles.title}>
+          {isLoginMode ? 'Sign in' : 'Create account'}
+        </h2>
+
+        <div className={styles.authBox}>
+          <AuthInput
+            label="Email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+
+          <AuthInput
+            label="Password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+
+          {!isLoginMode && (
+            <>
+              <AuthInput
+                label="Repeat password"
+                type="password"
+                value={repeatPassword}
+                onChange={(e) => setRepeatPassword(e.target.value)}
+              />
+
+              <AuthCheckbox
+                checked={agree}
+                onChange={(e) => setAgree(e.target.checked)}
+              />
+            </>
+          )}
+
+          <Button
+            title={isLoginMode ? 'Sign in' : 'Sign up'}
+            variant="primary" size='extraLarge'
+            disabled={!formValid || loading}
+            onClick={isLoginMode ? handleLogin : handleRegister}
+          />
+
+          {error && <p className={styles.error}>{error}</p>}
+
+          <p
+            className={styles.switch}
+            onClick={() => setIsLoginMode(!isLoginMode)}
+          >
+            {isLoginMode
+              ? "Don't have an account? Create one"
+              : 'Already have an account? Sign in'}
+          </p>
+        </div>
       </div>
-   )
+    </div>
+  )
 }
 
 export default Auth;

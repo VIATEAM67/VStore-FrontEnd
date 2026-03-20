@@ -33,9 +33,6 @@ export const AuthInput = ({ label, value, onChange, onBlur, error, type = 'text'
          onBlur={onBlur} />
       {error && <span style={{ color: 'red', fontSize: '14px' }}>{error}</span>}
 
-      {/* {touched.email && !emailValid && (
-      <span style={{ color: 'red', fontSize: '14px' }}>Enter a valid email</span> */}
-      {/* )} */}
    </Input>
 
 )

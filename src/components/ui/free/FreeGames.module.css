@@ -39,12 +39,15 @@
 .cardsList {
    display: flex;
    gap: 16px;
+   justify-content: space-between;
 }
 .cardsList li {
-   width: 340px;
+   width: 440px;
    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
    transition: transform 0.3s ease, box-shadow 0.3s ease;
    padding-bottom: 16px;
+   display: flex;
+   flex-direction: column;
 }
 .cardsList li:hover {
    transform: scale(1.05);
@@ -60,11 +63,21 @@
    color: var(--color-white);
    font-size: 20px;
    font-weight: 900;
-   margin-bottom: 8px;
+   margin-bottom: 12px;
+   margin-left: 12px;
 }
 .cardsList li span {
    color: var(--color-white);
    opacity: 70%;
    font-size: 16px;
    font-weight: 400;
+   margin-left: 12px;
+   display: inline-block;
+   margin-bottom: 8px;
+}
+.cardsList li span:last-child {
+   color: var(--color-green);
+   font-size: 16px;
+   font-weight: 900;
+   opacity: 100%;
 }

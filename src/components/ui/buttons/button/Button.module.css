@@ -1,10 +1,8 @@
 .button {
    border-radius: 4px;
-   padding: 8px 12px;
-   font-size: 16px;
-   font-weight: 500;
    border: none;
    transition: transform 0.3s ease, box-shadow 0.3s ease;
+   margin-right: 18px;
 }
 .button:hover {
    cursor: pointer;
@@ -13,28 +11,43 @@
 .button:active {
    transform: scale(0.95);
 }
-
-/* button types */
-.primary {    
+.primary {
    background-color: var(--color-green);
    color: var(--color-black);
 }
-.authSignIN {
-   background-color: var(--color-green);
-   padding: 32px 0;
-   width: 488px;
+.secondary {
+   background-color: #393E46;
+   color: var(--color-white);
+}
+.positioned {
+   background-color: var(--color-green); 
+   color: var(--color-black);
+   position: absolute;
+   top: 12px;
+   right: 12px;
+}
+.small {
+   padding: 4px 6px;
+   font-size: 14px;
+}
+.medium {
+   padding: 8px 12px;
+   font-size: 16px;
+   font-weight: 500;
+}
+.large { 
+   padding: 14px 42px;
+   font-size: 16px;
+   font-weight: 900;
+}
+.xlarge {
+   padding: 14px 104px;
    font-size: 18px;
    font-weight: 900;
 }
-.signIN {
-   background-color: var(--color-black);
-   width: 72px;
-   color: var(--color-white);
+.extraLarge {
+   padding: 32px 0;
+   width: 488px;
    font-size: 16px;
-   font-weight: medium;
-   padding: 10px 0;
-   border-radius: 4px;
-   margin: 0 18px;
-   border: none;
-   transition: transform 0.3s ease, box-shadow 0.3s ease;
+   font-weight: 800;
 }

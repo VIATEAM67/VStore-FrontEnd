@@ -23,7 +23,7 @@ const TopGame = () => {
 
                <div className={styles.buttonWrapper}>
                   <span>FREE</span>
-                  <Button title='Learn more' variant='primary' />
+                  <Button title='Learn more' variant='primary' size='medium'/>
                </div>
             </div>
             

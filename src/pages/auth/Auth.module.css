@@ -17,10 +17,43 @@
    font-size: 36px;
    font-weight: 900;
    text-align: start;
-   margin-bottom: 52px;
+   margin-bottom: 32px;
 }
 .authBox {
    background: linear-gradient(to right, #2B2F35 0%, #25282D 100%);
    border-radius: 20px;
    padding: 40px 42px 52px 42px;
+}
+.successful {
+   background: var(--color-black);
+   padding: 66px 44px;
+   border-radius: 20px;
+   width: 572px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   margin: 100px auto;
+}
+
+.successful h2 {
+   font-size: 32px;
+   font-weight: 900;
+   color: var(--color-white);
+   margin-bottom: 16px;
+}
+.successful p {
+   font-size: 16px;
+   font-weight: 500;
+   color: var(--color-white);
+   opacity: 80%;
+   margin-bottom: 60px;
+}
+.switch {
+   margin-top: 16px;
+   color: var(--color-white);
+}
+
+.switch:hover {
+   cursor: pointer;
+   text-decoration: underline;
 }

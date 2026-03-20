@@ -1,5 +1,10 @@
 .container{
    margin: 78px 0 88px 0;
+   position: relative;
+   /* display: flex;
+   justify-content: space-between;
+   align-items: center; */
+   
 }
 .title {
    color: #fff;
@@ -8,9 +13,16 @@
    margin-bottom: 24px;
    text-align: start;
 }
-.container ul{
+.container ul {
    display: flex;
    flex-direction: row;
+   flex-wrap: wrap;
    align-items: center;
+   justify-content: space-around;
    gap: 18px;
+}
+.button {
+   position: absolute;
+   top: 10px;
+   right: 10px;
 }

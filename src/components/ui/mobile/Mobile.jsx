@@ -8,14 +8,16 @@ const Mobile = () => {
          <img src={mobileImg} alt='/' className={styles.image}/>
 
          <div className={styles.description}>
-            <h3>
-               Vision Store Mobile
-            </h3>
-            <p>
-               Feudal Gotham’s Dark Night, Ninja Knight Batman, and the malicious wildcard Karuta Harley Quinn strike with a vengeance.
-            </p>
             
-            <ButtonLink title='Install Mobile' bgColor='var(--color-green)' textColor='var(--color-black)'/>
+            <div className={styles.wrapper}>
+               <h3>Vision Store Mobile</h3>
+               <p>
+                  Feudal Gotham’s Dark Night, Ninja Knight Batman, and the malicious wildcard Karuta Harley Quinn strike with a vengeance.
+               </p>
+            
+               <ButtonLink title='Install Mobile' bgColor='var(--color-green)' textColor='var(--color-black)'/>
+            </div>
+      
          </div>
       </div>
    )

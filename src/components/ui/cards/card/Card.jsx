@@ -1,38 +1,49 @@
 import styles from './Card.module.css'
+import { Link } from 'react-router-dom'
 
-const Card = ({src, altText, category, title, price, priceBefore, priceAfter}) => {
-   
-   const discount = priceBefore && priceAfter ? Math.round((1 - priceAfter / priceBefore) * 100) : null;
-   
+const Card = ({id, coverImageUrl, description, developer, title, price, finalPrice, discountPercent, releaseDate, publisher }) => {
+
+   const game = { id, coverImageUrl, description, developer, title, price, finalPrice, discountPercent, releaseDate, publisher };
+
    return (
-      <a className={styles.container}>
+      <Link to={`/game/${id}`} state={{ game }} className={styles.container}>
          <img className={styles.image}
-               src={src}
-               alt={altText}/>
+               src={coverImageUrl}
+               alt={title}/>
    
          <div className={styles.info}>
-            <div className={styles.description}>
-               <p className={styles.category}>{category}</p>
+            <div className={styles.descriptionBox}>
+               <p className={styles.category}>{developer}</p>
                <h3 className={styles.title}>{title}</h3>
             </div>
-           
 
             <div className={styles.priceContainer}>
-               {discount && <span className={styles.discount}>-{discount}%</span>}
+               
+               {discountPercent && (
+                  <span className={styles.discount}>
+                     -{discountPercent}%
+                  </span>
+               )}
 
                <div className={styles.beforeAfterPrice}>
-                  {priceBefore && priceAfter ?(
-                  <>
-                  <span className={styles.priceBefore}>{`UAH ${priceBefore}`}</span>
-                  <span className={styles.price}>{`UAH ${priceAfter}`}</span>
-                  </>
+                  {discountPercent ? (
+                     <>
+                        <span className={styles.priceBefore}>
+                           UAH {price}
+                        </span>
+                        <span className={styles.price}>
+                           UAH {finalPrice}
+                        </span>
+                     </>
                   ) : (
-                     <span className={styles.price}>{`UAH ${price}`}</span>
+                     <span className={styles.price}>
+                        UAH {price}
+                     </span>
                   )}
-               </div> 
+               </div>
             </div>
          </div>    
-      </a>
+      </Link>
    )
 }
 
