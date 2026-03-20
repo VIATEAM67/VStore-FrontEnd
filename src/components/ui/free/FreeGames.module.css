@@ -58,6 +58,7 @@
    margin-bottom: 18px;
    height: 228px;
    border-radius: 10px;
+   object-fit: cover;
 }
 .cardsList li p {
    color: var(--color-white);

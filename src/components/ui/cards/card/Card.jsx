@@ -1,15 +1,43 @@
 import styles from './Card.module.css'
 import { Link } from 'react-router-dom'
+import { FaShoppingCart, FaHeart } from 'react-icons/fa'
 
 const Card = ({id, coverImageUrl, description, developer, title, price, finalPrice, discountPercent, releaseDate, publisher }) => {
 
    const game = { id, coverImageUrl, description, developer, title, price, finalPrice, discountPercent, releaseDate, publisher };
 
+   const addToCart = (e) => {
+      e.preventDefault(); // чтобы не переходило по Link
+      
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      if (!cart.find(item => item.id === game.id)) {
+         cart.push(game);
+      }
+      cart.push(game);
+      localStorage.setItem('cart', JSON.stringify(cart));
+   };
+
+   const addToWishlist = (e) => {
+      e.preventDefault();
+
+      const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+      wishlist.push(game);
+      localStorage.setItem('wishlist', JSON.stringify(wishlist));
+   };
+
    return (
       <Link to={`/game/${id}`} state={{ game }} className={styles.container}>
-         <img className={styles.image}
+        <div className={styles.imageWrapper}>
+            <img className={styles.image}
                src={coverImageUrl}
-               alt={title}/>
+               alt={title}
+            />
+
+            <div className={styles.actions}>
+               {/* <FaShoppingCart  onClick={addToCart} className={styles.cartImg} /> */}
+               <FaHeart onClick={addToWishlist} className={styles.wishlistImg} />
+            </div>
+         </div>
    
          <div className={styles.info}>
             <div className={styles.descriptionBox}>
@@ -42,6 +70,9 @@ const Card = ({id, coverImageUrl, description, developer, title, price, finalPri
                   )}
                </div>
             </div>
+
+        
+
          </div>    
       </Link>
    )
