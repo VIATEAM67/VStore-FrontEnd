@@ -57,7 +57,7 @@
    align-items: center;
    justify-self: self-end;
    margin-top: auto;
-    min-height: 40px;
+   min-height: 40px;
 }
 .discount {
    background: var(--color-green);
@@ -84,4 +84,29 @@
    color: var(--color-white);
    font-size: 16px;
    font-weight: 800;
+}
+
+/* new */
+
+.imageWrapper {
+   position: relative;
+}
+.actions {
+   position: absolute;
+   top: 12px;
+   right: 12px; 
+   display: flex;
+   justify-content: flex-start;
+   gap: 8px;
+}
+.wishlistImg {
+   color: rgb(129, 132, 127);
+   width: 18px;
+   height: 18px;
+   transition: 0.2s;
+   cursor: pointer;
+}
+.cartImg:active, .wishlistImg:active {
+   transform: scale(1.05);
+   color: red;
 }

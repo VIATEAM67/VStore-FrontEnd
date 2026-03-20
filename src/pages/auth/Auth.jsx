@@ -7,7 +7,7 @@ import { AuthCheckbox } from './AuthCheckbox.jsx'
 import Button from '../../components/ui/buttons/button/Button.jsx'
 
 import { isValidEmail, isValidPassword, passwordsMatch } from '../../utils/validation'
-import { registerUser, loginUser } from '../../api/AuthAPI.js'
+import { registerUser, loginUser } from '../../api/authApi.js'
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 
