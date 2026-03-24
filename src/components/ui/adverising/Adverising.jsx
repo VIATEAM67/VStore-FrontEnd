@@ -15,8 +15,8 @@ const Advertising = ({title, type}) => {
 
    const data = type === 'sale' ? saleGames : type === 'fullPrice' ? fullPriceGame : games;
 
-   // если showAll = false → только 8 карточек
-   const visibleCards = showAll ? data : data.slice(0, 8);
+   // если showAll = false → только 7 карточек
+   const visibleCards = showAll ? data : data.slice(0, 7);
 
    return (
       <div className={styles.container}>
@@ -29,7 +29,7 @@ const Advertising = ({title, type}) => {
             ))}
          </ul>
 
-         {data.length > 8 && (
+         {data.length > 7 && (
             <Button
                title={showAll ? 'Hide all games' : 'All games'}
                variant="positioned" size='small'
